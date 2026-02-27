@@ -5,12 +5,15 @@ import com.kevindelong.candleaggregationservice.store.InMemoryCandleStore;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/api/candles")
 public class CandleController {
     private final CandleAggregator aggregator;
     private final InMemoryCandleStore store;
+    private static final Logger log = LoggerFactory.getLogger(CandleController.class);
 
     public CandleController(CandleAggregator aggregator,
                                  InMemoryCandleStore store) {
@@ -23,6 +26,7 @@ public class CandleController {
                        @RequestParam Timeframe timeframe) {
 
         aggregator.onEvent(event, timeframe);
+        log.info("Ingesting event for symbol={} interval={}", event.symbol(), timeframe);
     }
 
     @GetMapping("/get-candles")
