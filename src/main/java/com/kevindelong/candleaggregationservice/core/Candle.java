@@ -3,7 +3,7 @@ package com.kevindelong.candleaggregationservice.core;
 public class Candle {
 
     private final long time;
-    private double open;
+    private final double open;
     private double high;
     private double low;
     private double close;
@@ -18,7 +18,7 @@ public class Candle {
         this.volume = 1;
     }
 
-    public synchronized void update(double price) {
+    public void update(double price) {
         high = Math.max(high, price);
         low = Math.min(low, price);
         close = price;
